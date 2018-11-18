@@ -1,11 +1,13 @@
 <template>
   <div class="home">
     <ol>
-      <h1>{{ message }}</h1>
-      <li>{{ task1 }}</li>
-      <li>{{ task2 }}</li>
-      <li> {{ task3 }} </li>
+      <li v-for="task in tasks">task: {{ task.task }} id: {{ task.id }} completed {{ task.completed }}</li>
   </ol>
+  <p>task:<input type="text" v-model="newTask.task"></p>
+  <p>id:<input type="text" v-model="newTask.id"></p>
+  <p>completed:<input type="text" v-model="newTask.completed"></p>
+
+  <p><button v-on:click="addTask()">Click here to add new task</button></p>
   </div>
 </template>
 
@@ -20,14 +22,23 @@ ol {
 export default {
   data: function() {
     return {
-      message: "Complete the following tasks!",
-      task1: "Wash your car",
-      task2: "Do the dishes",
-      task3: "Do laundry."
+      tasks: [
+        {task: "Wash your car", id: 1, completed: true},
+        {task: "Do the dishes", id: 2, completed: false},
+        {task: "Do laundry.", id: 3, completed: false}
+      ],
+      newTask: {task: "", id: "", completed: ""}
     };
   },
   created: function() {},
-  methods: {},
+  methods: {
+    addTask: function() {
+      console.log('adding task');
+      this.tasks.push(this.newTask);
+      this.newTask = {task: "", id: "", completed: ""};
+    }
+
+  },
   computed: {}
 };
 </script>
